@@ -11,8 +11,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 
 interface Product {
-  inputs: any;
-  title: string;
+  inputs: any
+  title: string
 }
 
 function NewProduct ({ inputs, title }: Product) {
@@ -62,7 +62,12 @@ function NewProduct ({ inputs, title }: Product) {
     file && uploadFile();
   }, [file]);
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const id = e.target.id;
     const value = e.target.value;
     setData({ ...data, [id]: value });
@@ -131,7 +136,7 @@ function NewProduct ({ inputs, title }: Product) {
                   </label>
                   <input id="file" type="file" onChange={(e) => setFile(e.target.files![0])} />
                 </div>
-                {inputs.map((item: any) => {
+                {/* {inputs.map((item: any) => {
                   return (
                     <div className="formInput" key={item.id}>
                       <label>{item.label}</label>
@@ -143,7 +148,82 @@ function NewProduct ({ inputs, title }: Product) {
                       />
                     </div>
                   );
-                })}
+                })} */}
+
+                <div className="formInput">
+                  <label>Uid</label>
+                  <input
+                    id="uid"
+                    type="number"
+                    placeholder="uid product"
+                    onChange={(e) => handleInput(e)}
+                  />
+                </div>
+
+                <div className="formInput">
+                  <label>Title</label>
+                  <input
+                    id="title"
+                    type="text"
+                    placeholder="Apple Macbook Pro"
+                    onChange={(e) => handleInput(e)}
+                  />
+                </div>
+
+                <div className="formInput">
+                  <label>Description</label>
+                  <textarea
+                    id="description"
+                    placeholder="Description"
+                    onChange={(e) => handleInput(e)}
+                  />
+                </div>
+
+                <div className="formInput">
+                  <label>Category</label>
+                  <select id="category" placeholder="category" onChange={(e) => handleInput(e)}>
+                    <option value="Men Clothes">Choose</option>
+                    <option value="Men Clothes">Men Clothes</option>
+                    <option value="Women Clothes">Women Clothes</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="Men Shoes">Men Shoes</option>
+                    <option value="Women Shoes">Women Shoes</option>
+                    <option value="Books">Books</option>
+                    <option value="Heath">Heath</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Sport">Sport</option>
+                  </select>
+                </div>
+
+                <div className="formInput">
+                  <label>Price</label>
+                  <input
+                    id="price"
+                    type="number"
+                    placeholder="100"
+                    onChange={(e) => handleInput(e)}
+                  />
+                </div>
+
+                <div className="formInput">
+                  <label>Stock</label>
+                  <input
+                    id="stock"
+                    type="number"
+                    placeholder="in stock"
+                    onChange={(e) => handleInput(e)}
+                  />
+                </div>
+
+                <div className="formInput">
+                  <label>Status</label>
+                  <select id="status" placeholder="status" onChange={(e) => handleInput(e)}>
+                    <option value="Pending">Pending</option>
+                    <option value="Active">Active</option>
+                    <option value="Inconfirm">Inconfirm</option>
+                  </select>
+                </div>
 
                 <button type="submit" disabled={per !== null && per < 100}>
                   Send

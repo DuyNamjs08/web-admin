@@ -16,8 +16,10 @@ import { useDispatch } from 'react-redux';
 import { Dark, Light, LogOutauth } from '../../reduxStore/action';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.Config';
+import { useTranslation } from 'react-i18next';
 
 function Sidebar () {
+  const { t } = useTranslation(['sidebar']);
   const dispatch = useDispatch();
   const naviagte = useNavigate();
   const handleSignout = () => {
@@ -42,49 +44,51 @@ function Sidebar () {
 
       <div className="center">
         <ul>
-          <p className="title">MAIN</p>
+          <p className="title">{t('sidebar:main')}</p>
           <Link to="/" style={{ textDecoration: 'none' }}>
             <li>
               <DashboardIcon className="icon" />
-              <span>Dashboard</span>
+              <span>{t('sidebar:dashboard')}</span>
             </li>
           </Link>
-          <p className="title">LISTS</p>
+          <p className="title">{t('sidebar:lists')}</p>
           <Link to="/user" style={{ textDecoration: 'none' }}>
             <li>
               {' '}
               <AccountCircleIcon className="icon" />
-              <span>Users</span>
+              <span>{t('sidebar:users')}</span>
             </li>
           </Link>
           <Link to="/product" style={{ textDecoration: 'none' }}>
             <li>
               {' '}
               <StoreIcon className="icon" />
-              <span>Products</span>
+              <span>{t('sidebar:products')}</span>
             </li>
           </Link>
 
           <li>
             {' '}
             <Inventory2Icon className="icon" />
-            <span>Orders</span>
+            <span>{t('sidebar:orders')}</span>
           </li>
+          <Link to="/category" style={{ textDecoration: 'none' }}>
           <li>
             {' '}
             <LocalShippingIcon className="icon" />
-            <span>Delivery</span>
+            <span>{t('sidebar:category')}</span>
           </li>
-          <p className="title">USEFUL</p>
+          </Link>
+          <p className="title">{t('sidebar:useful')}</p>
           <li>
             {' '}
             <InsertChartIcon className="icon" />
-            <span>Status</span>
+            <span>{t('sidebar:status')}</span>
           </li>
           <li>
             {' '}
             <CircleNotificationsIcon className="icon" />
-            <span>Notifications</span>
+            <span>{t('sidebar:notifications')}</span>
           </li>
           {/* <p className="title">SERVICE</p> */}
           {/* <li> <SettingsSystemDaydreamIcon className='icon' />
@@ -96,16 +100,16 @@ function Sidebar () {
           <li> <SettingsApplicationsIcon  className='icon'/>
             <span>Setting</span>
           </li> */}
-          <p className="title">USER</p>
+          <p className="title">{t('sidebar:user')}</p>
           <li>
             {' '}
             <PersonIcon className="icon" />
-            <span>Profile</span>
+            <span>{t('sidebar:profile')}</span>
           </li>
           <li onClick={handleSignout}>
             {' '}
             <LogoutIcon className="icon" />
-            <span>Logout</span>
+            <span>{t('sidebar:logout')}</span>
           </li>
         </ul>
       </div>

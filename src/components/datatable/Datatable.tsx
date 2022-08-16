@@ -2,7 +2,7 @@ import './datatable.scss';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { userColumns } from '../../data/dataTableSource';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {
   collection,
@@ -15,6 +15,7 @@ import { db } from '../../firebase/firebase.Config';
 
 function Datatable () {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     // const list=[]
     // const fetchData = async () => {
@@ -61,11 +62,20 @@ function Datatable () {
       headerName: 'Action',
       width: 200,
       renderCell: (params: any) => {
-        console.log('checkk id :', params.row.id);
+        // console.log('checkk id :', params.row.id);
+        const handleView = () => {
+          navigate('/user/viewUser', { state: params.row.id });
+        };
         return (
           <div className="cellAction">
-            <Link to="/user/test" style={{ textDecoration: 'none' }}>
-              <div className="viewButton">View</div>
+            <div onClick={handleView} className="viewButton">
+              View
+            </div>
+            <Link
+              to={`/user/${params.row.id}`}
+              style={{ textDecoration: 'none' }}
+            >
+              <div className="viewButton">Edit</div>
             </Link>
             <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>
               Delete

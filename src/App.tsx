@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Suspense } from 'react';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import List from './pages/list/List';
@@ -6,8 +7,12 @@ import ListProduct from './pages/listProduct/ListProduct';
 import New from './pages/newuser/New';
 import NewProduct from './pages/newProduct/NewProduct';
 import Single from './pages/single/Single';
+import UserItem from './pages/userItem/UserItem';
 // import Gggmap from './pages/ggmap/Gggmap'
 import Profile from './pages/profile/Profile';
+import ProductItem from './pages/productItem/ProductItem';
+import ProductView from './pages/productView/ProductView';
+import Category from './pages/category/Category';
 import { productInputs } from './data/formSource';
 import './darkmode/style.scss';
 
@@ -33,6 +38,7 @@ function App () {
 
   return (
     <div className={darkMode ? ' App dark' : 'App'}>
+      <Suspense fallback={null} >
       <Router>
         <Routes>
           <Route path="/">
@@ -61,6 +67,14 @@ function App () {
                 </RequireAuth>
               }
             ></Route>
+            <Route
+              path="category"
+              element={
+                <RequireAuth>
+                  <Category/>
+                </RequireAuth>
+              }
+            ></Route>
             <Route path="user">
               <Route
                 index
@@ -72,6 +86,14 @@ function App () {
               ></Route>
               <Route
                 path=":userId"
+                element={
+                  <RequireAuth>
+                    <UserItem />
+                  </RequireAuth>
+                }
+              ></Route>
+              <Route
+                path="viewUser"
                 element={
                   <RequireAuth>
                     <Single />
@@ -101,7 +123,15 @@ function App () {
                 path=":productId"
                 element={
                   <RequireAuth>
-                    <Single />
+                    <ProductItem />
+                  </RequireAuth>
+                }
+              ></Route>
+              <Route
+                path="viewProduct"
+                element={
+                  <RequireAuth>
+                    <ProductView />
                   </RequireAuth>
                 }
               ></Route>
@@ -117,6 +147,7 @@ function App () {
           </Route>
         </Routes>
       </Router>
+      </Suspense>
     </div>
   );
 }

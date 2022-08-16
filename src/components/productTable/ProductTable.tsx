@@ -2,7 +2,7 @@ import './productTable.scss';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { userColumnProduct } from '../../data/dataTableSource';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {
   collection,
@@ -15,6 +15,7 @@ import { db } from '../../firebase/firebase.Config';
 
 function ProductTable () {
   const [data, setData] = useState<any>([]);
+  const navigate = useNavigate();
   useEffect(() => {
     // const list=[]
     // const fetchData = async () => {
@@ -61,11 +62,20 @@ function ProductTable () {
       headerName: 'Action',
       width: 200,
       renderCell: (params: any) => {
-        console.log('checkk id :', params.row.id);
+        // console.log('checkk id :', params.row.id);
+        const handleView = () => {
+          navigate('/product/viewProduct', { state: params.row.id });
+        };
         return (
           <div className="cellAction">
-            <Link to="/product/single" style={{ textDecoration: 'none' }}>
-              <div className="viewButton">View</div>
+            <div onClick={handleView} className="viewButton">
+              View
+            </div>
+            <Link
+              to={`/product/${params.row.id}`}
+              style={{ textDecoration: 'none' }}
+            >
+              <div className="viewButton">Edit</div>
             </Link>
             <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>
               Delete
@@ -79,7 +89,7 @@ function ProductTable () {
   return (
     <div className="dataProducttable">
       <div className="datatableTitle">
-        Add New User
+        Add New Product
         <Link className="datatableAddLink" to="/product/new">
           Add New
         </Link>

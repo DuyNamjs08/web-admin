@@ -50,7 +50,7 @@ function New () {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               console.log('File available at', downloadURL);
               setImg((prev) => ({ ...prev, img: downloadURL }));
-              setLoadImg(true)
+              setLoadImg(true);
             });
           }
         );
@@ -67,6 +67,7 @@ function New () {
     phone: number
     password: string
     address: string
+    country: string
   }
   const {
     register,
@@ -192,7 +193,7 @@ function New () {
                       }
                     })}
                   />
-                  {errors.address && <p className="messages">{errors.address.message}</p>}
+                  {errors.password && <p className="messages">{errors.password.message}</p>}
                 </div>
 
                 <div className="formInput">
@@ -205,7 +206,20 @@ function New () {
                       required: 'Vui lòng nhập địa chỉ'
                     })}
                   />
-                  {errors.password && <p className="messages">{errors.password.message}</p>}
+                  {errors.address && <p className="messages">{errors.address.message}</p>}
+                </div>
+
+                <div className="formInput">
+                  <label>Country</label>
+                  <input
+                    id="country"
+                    type="text"
+                    placeholder="USA"
+                    {...register('country', {
+                      required: 'Vui lòng nhập quoc gia'
+                    })}
+                  />
+                  {errors.country && <p className="messages">{errors.country.message}</p>}
                 </div>
 
                 <button type="submit" disabled={per !== null && per < 100 && loadImg}>
